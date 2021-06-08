@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Update {{ todo['description'] }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description" 
+        value="{{ request.form['description'] or todo['description'] }}" 
+        required />
+        <label for="completed">Completed</label>
+        <input type="checkbox" name="completed" id="completed" {% if todo['completed'] == 1%}checked{% endif %} />
+        <input type="submit" value="Save" />
+    </form>
+
+    <form action="{{ url_for('todo.delete', id=todo['id']) }}" method="post">
+        <input type="submit" value="Delete" class="danger" onclick="return confirm('Are you sure?')" />
+    </form>
+{% endblock %}
